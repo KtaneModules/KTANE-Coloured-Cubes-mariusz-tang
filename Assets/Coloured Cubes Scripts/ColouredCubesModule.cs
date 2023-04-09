@@ -69,7 +69,6 @@ public class ColouredCubesModule : MonoBehaviour {
         "weeee"
     };
     private readonly string[] _twitchCubeCommandList = new string[] {
-        "0",
         "1",
         "2",
         "3",
@@ -77,12 +76,22 @@ public class ColouredCubesModule : MonoBehaviour {
         "5",
         "6",
         "7",
-        "8"
+        "8",
+        "9",
     };
     private readonly string[] _twitchButtonCommandList = new string[] {
         "S1",
         "S2",
         "S3",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6",
+        "H7",
+        "H8",
+        "H9",
         "SCREEN"
     };
     private readonly string[] _sizeChartColours = new string[] {
@@ -248,7 +257,7 @@ public class ColouredCubesModule : MonoBehaviour {
 
         _displayingSizeChart = false;
 
-        if (light.name == "Stage1Light" && _internalStage >= 1 && _displayedStage != 1) {
+        if (light.name == "Stage1Light" && _internalStage >= 1) {
             StartCoroutine(StageOneAnimation());
         }
         else if (light.name == "Stage2Light" && _internalStage >= 2) {
@@ -673,8 +682,10 @@ public class ColouredCubesModule : MonoBehaviour {
     }
 
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"Use !{0} 0-8 in reading order to select/deselect cubes. Use !{0} s1/2/3 to press stage lights. " +
-                                                    "Use !{0} screen to press the screen button. Chain commands together with spaces.";
+    private readonly string TwitchHelpMessage = @"Use '!{0} <position> to select/deselect a cube | "
+                                                    + "'!{0} s1/s2/s3' to press stage lights | '!{0} screen' to press the screen button | "
+                                                    + "Colourblind Support: '!{0} h<position> to highlight a cube | Positions are from 1-9 in reading order; "
+                                                    + "Chain commands together with spaces.";
 #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string command) {
@@ -702,13 +713,22 @@ public class ColouredCubesModule : MonoBehaviour {
             }
 
             if (_twitchCubeCommandList.Contains(instruction)) {
-                Cubes[int.Parse(instruction)].GetComponent<KMSelectable>().OnInteract();
+                Cubes[int.Parse(instruction) - 1].GetComponent<KMSelectable>().OnInteract();
+                Cubes[int.Parse(instruction) - 1].GetComponent<KMSelectable>().OnHighlightEnded();
             }
             else if (instruction == "SCREEN") {
                 Screen.GetComponent<KMSelectable>().OnInteract();
             }
             else {
-                StageLights[instruction[1] - '1'].GetComponent<KMSelectable>().OnInteract();
+                if (instruction[0] == 's') {
+                    StageLights[instruction[1] - '1'].GetComponent<KMSelectable>().OnInteract();
+                    StageLights[instruction[1] - '1'].GetComponent<KMSelectable>().OnHighlightEnded();
+                }
+                else {
+                    Cubes[instruction[1] - '1'].GetComponent<KMSelectable>().OnHighlight();
+                    yield return new WaitForSeconds(1f);
+                    Cubes[instruction[1] - '1'].GetComponent<KMSelectable>().OnHighlightEnded();
+                }
             }
 
             yield return new WaitForSeconds(0.1f);
