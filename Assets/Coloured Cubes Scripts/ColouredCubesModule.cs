@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using KModkit;
+using UnityEngine;
 using Rnd = UnityEngine.Random;
 
 public class ColouredCubesModule : MonoBehaviour {
@@ -217,7 +217,8 @@ public class ColouredCubesModule : MonoBehaviour {
             Audio.PlaySoundAtTransform("Deselect", cube.GetComponent<Transform>());
 
             if (_possibleSubmission) { DisableSubmission(); }
-        } else if (!_possibleSubmission) {
+        }
+        else if (!_possibleSubmission) {
             cube.SetHighlight(true);
             _selectedPositions.Add(cube.Position);
             Audio.PlaySoundAtTransform("Select", cube.GetComponent<Transform>());
@@ -249,9 +250,11 @@ public class ColouredCubesModule : MonoBehaviour {
 
         if (light.name == "Stage1Light" && _internalStage >= 1 && _displayedStage != 1) {
             StartCoroutine(StageOneAnimation());
-        } else if (light.name == "Stage2Light" && _internalStage >= 2) {
+        }
+        else if (light.name == "Stage2Light" && _internalStage >= 2) {
             StartCoroutine(StageTwoAnimation());
-        } else if (light.name == "Stage3Light" && _internalStage >= 3) {
+        }
+        else if (light.name == "Stage3Light" && _internalStage >= 3) {
             StartCoroutine(StageThreeAnimation());
         }
     }
@@ -270,9 +273,11 @@ public class ColouredCubesModule : MonoBehaviour {
 
         if (_internalStage == 0) {
             StartCoroutine(StageOneAnimation());
-        } else if (!_displayingSizeChart) {
+        }
+        else if (!_displayingSizeChart) {
             ShowSizeChart();
-        } else {
+        }
+        else {
             HideSizeChart();
         }
     }
@@ -287,11 +292,13 @@ public class ColouredCubesModule : MonoBehaviour {
         if (_internalStage == 1) {
             DisableSubmission();
             StartCoroutine(StageTwoAnimation());
-        } else if (_internalStage == 2) {
+        }
+        else if (_internalStage == 2) {
             DisableSubmission();
             StartCoroutine(StageThreeAnimation());
             _selectionsNeededForSubmission = 2;
-        } else {
+        }
+        else {
             SolveModule();
         }
     }
@@ -302,7 +309,8 @@ public class ColouredCubesModule : MonoBehaviour {
         for (int i = 0; i < _selectedPositions.Count(); i++) {
             if (i == _selectedPositions.Count() - 1) {
                 selectedCubes += "and " + (Position)_selectedPositions[i];
-            } else {
+            }
+            else {
                 selectedCubes += (Position)_selectedPositions[i] + ", ";
             }
         }
@@ -380,9 +388,11 @@ public class ColouredCubesModule : MonoBehaviour {
 
         if (_displayedStage == 1) {
             StartCoroutine(StageOneAnimation());
-        } else if (_displayedStage == 2) {
+        }
+        else if (_displayedStage == 2) {
             StartCoroutine(StageTwoAnimation(showCycles: false));
-        } else {
+        }
+        else {
             StartCoroutine(StageThreeAnimation());
         }
     }
@@ -445,7 +455,7 @@ public class ColouredCubesModule : MonoBehaviour {
         DeselectCubes();
 
         if (showCycles) {
-            ColouredCube.ShrinkAndMakeWhite(Cubes); 
+            ColouredCube.ShrinkAndMakeWhite(Cubes);
             do { yield return null; } while (ColouredCube.AreBusy(Cubes));
 
             foreach (Cycle cycle in _stageTwoCycles) {
@@ -693,9 +703,11 @@ public class ColouredCubesModule : MonoBehaviour {
 
             if (_twitchCubeCommandList.Contains(instruction)) {
                 Cubes[int.Parse(instruction)].GetComponent<KMSelectable>().OnInteract();
-            } else if (instruction == "SCREEN") {
+            }
+            else if (instruction == "SCREEN") {
                 Screen.GetComponent<KMSelectable>().OnInteract();
-            } else {
+            }
+            else {
                 StageLights[instruction[1] - '1'].GetComponent<KMSelectable>().OnInteract();
             }
 
@@ -719,7 +731,8 @@ public class ColouredCubesModule : MonoBehaviour {
 
         if (_internalStage == 0) {
             Screen.GetComponent<KMSelectable>().OnInteract();
-        } else if (_internalStage != _displayedStage || _displayingSizeChart) {
+        }
+        else if (_internalStage != _displayedStage || _displayingSizeChart) {
             StageLights[_internalStage - 1].GetComponent<KMSelectable>().OnInteract();
         }
 
@@ -742,7 +755,7 @@ public class ColouredCubesModule : MonoBehaviour {
             if (_internalStage == 3) {
                 done = true;
             }
-            
+
             Screen.GetComponent<KMSelectable>().OnInteract();
         }
     }
