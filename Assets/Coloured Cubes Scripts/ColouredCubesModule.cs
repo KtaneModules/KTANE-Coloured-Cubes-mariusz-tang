@@ -92,6 +92,9 @@ public class ColouredCubesModule : MonoBehaviour {
         "H7",
         "H8",
         "H9",
+        "HS1",
+        "HS2",
+        "HS3",
         "SCREEN"
     };
     private readonly string[] _sizeChartColours = new string[] {
@@ -683,9 +686,9 @@ public class ColouredCubesModule : MonoBehaviour {
 
 #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"Use '!{0} <position> to select/deselect a cube | "
-                                                    + "'!{0} s1/s2/s3' to press stage lights | '!{0} screen' to press the screen button | "
-                                                    + "Colourblind Support: '!{0} h<position> to highlight a cube | Positions are from 1-9 in reading order; "
-                                                    + "Chain commands together with spaces.";
+                                                    + "'!{0} s<position>' to press a stage light | '!{0} screen' to press the screen button | "
+                                                    + "Colourblind Support: '!{0} h<position> to highlight a cube; '!{0} hs<position>' to highlight a stage light | "
+                                                    + "Cube positions are from 1-9 in reading order; Stage light positions are 1-3, bottom-to-top; Chain commands together with spaces.";
 #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string command) {
@@ -720,7 +723,12 @@ public class ColouredCubesModule : MonoBehaviour {
                 Screen.GetComponent<KMSelectable>().OnInteract();
             }
             else {
-                if (instruction[0] == 's') {
+                if (instruction.Length == 3) {
+                    StageLights[instruction[2] - '1'].GetComponent<KMSelectable>().OnHighlight();
+                    yield return new WaitForSeconds(1f);
+                    StageLights[instruction[2] - '1'].GetComponent<KMSelectable>().OnHighlightEnded();
+                }
+                else if (instruction[0] == 'S') {
                     StageLights[instruction[1] - '1'].GetComponent<KMSelectable>().OnInteract();
                     StageLights[instruction[1] - '1'].GetComponent<KMSelectable>().OnHighlightEnded();
                 }
