@@ -168,7 +168,7 @@ public class ColouredCubesModule : MonoBehaviour {
         _stageThreeAnimations.Add(Spiral);
 
         Screen.EnableOverrideText("Start");
-        Debug.LogFormat("[Coloured Cubes #{0}] Press the screen the start.", _moduleId);
+        Debug.LogFormat("[Coloured Cubes #{0}] Press the screen to start.", _moduleId);
     }
 
     void GenerateStages() {
@@ -688,7 +688,7 @@ public class ColouredCubesModule : MonoBehaviour {
     private readonly string TwitchHelpMessage = @"Use '!{0} <position> to select/deselect a cube | "
                                                     + "'!{0} s<position>' to press a stage light | '!{0} screen' to press the screen button | "
                                                     + "Colourblind Support: '!{0} h<position> to highlight a cube; '!{0} hs<position>' to highlight a stage light | "
-                                                    + "Cube positions are from 1-9 in reading order; Stage light positions are 1-3, bottom-to-top; Chain commands together with spaces.";
+                                                    + "Cube positions are from 1-9 in reading order; stage light positions are 1-3, bottom-to-top; chain commands together with spaces.";
 #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string command) {
