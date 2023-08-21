@@ -20,7 +20,7 @@ public class ColouredCube : MonoBehaviour, IColouredItem {
     private int _position; // Position in reading order, starting from 0.
     private int _size = 2;
 
-    private string _colourName = "Gray";
+    private string _colourName = "Grey";
     private string _colourValues = "111";
 
     private bool _isHidden = true;

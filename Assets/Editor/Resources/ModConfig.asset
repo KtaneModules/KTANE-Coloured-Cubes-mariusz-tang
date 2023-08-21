@@ -14,17 +14,10 @@ MonoBehaviour:
   id: ColouredCubes
   title: Coloured Cubes
   author: Kuro
-  description: 'WHY ARE THEY MOVING??!?
-
-
-    Form sets using colour components and sizes to progress through three stages.
-    The cubes like to dance.
-
-
-    Manual can be found at ktane.timwi.de or in the manuals folder of your game.
-
-
-    Report bugs to Kuro#2011 on Discord.'
+  description: "WHY ARE THEY MOVING??!?\r\n\r\nForm sets using colour components and
+    sizes to progress through three stages. The cubes like to dance.\r\n\r\nManual
+    can be found at ktane.timwi.de or in the manuals folder of your game.\r\n\r\nReport
+    bugs to ku.ro on Discord."
   version: 1
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 01cab43ac15a99042859db773f58336b, type: 3}
